@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState }  from 'react'
 import NavBar from '../components/Navbar'
 import {
     BrowserRouter as Router,
@@ -7,8 +7,12 @@ import {
 } from "react-router-dom";
 import Crud from '../components/Crud';
 import PokeGrid from '../components/PokeGrid';
+import PokeDetails from '../components/PokeDetails';
 
 export default function AppRouter() {
+
+    const [busqueda, setBusqueda] = useState(null)
+
     return (<>
 
         <Router>
@@ -16,6 +20,10 @@ export default function AppRouter() {
             <Switch>
                 <Route exact path="/">
                     <PokeGrid />
+                </Route>
+
+                <Route exact path="/detalles/:nombre">
+                    <PokeDetails />
                 </Route>
 
                 <Route exact path="/CRUD">
