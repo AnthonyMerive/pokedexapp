@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { useForm } from '../hooks/useForm'
+import OffCanvas from './OffCanvas'
 
 const StyledContainer = styled.div`
 
@@ -37,12 +39,35 @@ const StyledContainer = styled.div`
 
   }
 
-
-
 `
 
 export default function NavBar(props) {
 
+    const [register, setRegister] = useState(false);
+    const [login, setLogin] = useState(false);
+
+    const [values, setValues, handleInputChange, handleFileChange, reset] = useForm({
+        busq: ''
+    })
+
+    const { busq } = values;
+
+    const handleBuscar = (e) => {
+        e.preventDefault();
+        props.setBusqueda(busq)
+        reset();
+    }
+
+    const handleRegister = () => {
+        setRegister(true)
+        setLogin(false)
+    }
+    
+    const handleLogin = () => {
+        setRegister(false)
+        setLogin(true)
+    }
+    
     return (
         <StyledContainer>
             <nav className="navbar navbar-expand-lg">
@@ -58,16 +83,35 @@ export default function NavBar(props) {
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <Link to="/CRUD" className="nav-link active text-white">CRUD</Link>
+                                <Link to="/CRUD" className="nav-link active text-white">Profile</Link>
                             </li>
                         </ul>
-                        <form className="d-flex ">
-                            <input className="form-control me-1" type="search" placeholder="Name or #" aria-label="Search" />
+                        <a onClick={handleRegister} className="btn btn-outline-light me-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                            Register
+                        </a>
+                        <a onClick={handleLogin} className="btn btn-outline-light me-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                            Login
+                        </a>
+                        <form onSubmit={handleBuscar} className="d-flex ">
+                            <input
+                                className="form-control me-1"
+                                type="search"
+                                placeholder="Name - Max # 649"
+                                aria-label="Search"
+                                name="busq"
+                                value={busq}
+                                onChange={handleInputChange}
+                            />
                             <button className="btn btn-outline-warning me-3" type="submit">Search</button>
                         </form>
                     </div>
                 </div>
             </nav>
+
+            <OffCanvas register={register} login={login}/>
+
         </StyledContainer>
+
+
     )
 }

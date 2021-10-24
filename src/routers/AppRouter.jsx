@@ -16,10 +16,10 @@ export default function AppRouter() {
     return (<>
 
         <Router>
-            <NavBar />
+            <NavBar setBusqueda={setBusqueda} />
             <Switch>
                 <Route exact path="/">
-                    <PokeGrid />
+                    <PokeGrid busqueda={busqueda}/>
                 </Route>
 
                 <Route exact path="/detalles/:nombre">

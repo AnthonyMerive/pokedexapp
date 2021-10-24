@@ -6,6 +6,7 @@ const StyledDiv = styled.div`
 background: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d8anydd-7c081a1c-cc9b-4bac-a5d7-b5b4c7576d40.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzJmYjI4MjFhLTE0MDYtNGExZC05YjA0LTY2NjhmMjc4ZTk0NFwvZDhhbnlkZC03YzA4MWExYy1jYzliLTRiYWMtYTVkNy1iNWI0Yzc1NzZkNDAucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.Og6LldyQAtcNhFPb_00Buldx1gQ5riFUZsvw0XXhkz4') center;
 background-size: contain;
 height: 100%;
+overflow: scroll;
 
     .container{
         display: flex;
@@ -102,7 +103,7 @@ export default function PokeDetails() {
 
                 <div className="col">
                     <p className="titulo"><strong>{detalle.name.toUpperCase()}</strong></p>
-                    <p><strong>Number:</strong> {detalle.order}</p>
+                    <p><strong>Number:</strong> {detalle.id}</p>
                     <p><strong>Height:</strong> {detalle.height}</p>
                     <p><strong>Weight:</strong> {detalle.weight}</p>
                     <p><strong>Type:</strong> {detalle.types.map(tipos => tipos.type.name).join("/")}</p>
