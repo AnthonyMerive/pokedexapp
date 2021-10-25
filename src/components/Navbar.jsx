@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router'
 import styled from 'styled-components'
+import { logout } from '../actions/loginAction'
+import { resetRegister } from '../actions/registerAction'
 import { useForm } from '../hooks/useForm'
 import OffCanvas from './OffCanvas'
 
@@ -43,10 +46,13 @@ const StyledContainer = styled.div`
 
 export default function NavBar(props) {
 
+    const dispatch = useDispatch();
+    const history = useHistory();
+
     const [register, setRegister] = useState(false);
     const [login, setLogin] = useState(false);
 
-    const [values, setValues, handleInputChange, handleFileChange, reset] = useForm({
+    const [values, handleInputChange, reset] = useForm({
         busq: ''
     })
 
@@ -62,12 +68,25 @@ export default function NavBar(props) {
         setRegister(true)
         setLogin(false)
     }
-    
+
     const handleLogin = () => {
         setRegister(false)
         setLogin(true)
     }
-    
+
+    const handleLogout = () => {
+        dispatch(logout());
+        dispatch(resetRegister())
+        localStorage.clear();
+        window.location.reload();
+    }
+
+    const handleMyPokemons = () => {
+        history.replace('/mypokemons')
+    }
+
+
+
     return (
         <StyledContainer>
             <nav className="navbar navbar-expand-lg">
@@ -83,15 +102,32 @@ export default function NavBar(props) {
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <Link to="/CRUD" className="nav-link active text-white">Profile</Link>
+                                {props.auth &&
+                                    <span className="nav-link active text-white">▶ {props.user.displayName}</span>
+                                }
                             </li>
                         </ul>
-                        <a onClick={handleRegister} className="btn btn-outline-light me-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-                            Register
-                        </a>
-                        <a onClick={handleLogin} className="btn btn-outline-light me-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-                            Login
-                        </a>
+                        {
+                            !props.auth ?
+                                <div>
+                                    <a onClick={handleRegister} className="btn btn-outline-light me-1" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                                        Register
+                                    </a>
+                                    <a onClick={handleLogin} className="btn btn-outline-light me-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                                        Login
+                                    </a>
+                                </div>
+                                :
+                                <div>
+                                    <span onClick={handleMyPokemons} className="btn btn-outline-light me-1">
+                                        My pokemon's
+                                    </span>
+                                    <span onClick={handleLogout} className="btn btn-outline-danger me-3">
+                                        Logout
+                                    </span>
+                                </div>
+
+                        }
                         <form onSubmit={handleBuscar} className="d-flex ">
                             <input
                                 className="form-control me-1"
@@ -108,7 +144,7 @@ export default function NavBar(props) {
                 </div>
             </nav>
 
-            <OffCanvas register={register} login={login}/>
+            <OffCanvas register={register} login={login} />
 
         </StyledContainer>
 

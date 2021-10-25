@@ -1,4 +1,4 @@
-import React, { useState }  from 'react'
+import React, { useEffect, useState } from 'react'
 import NavBar from '../components/Navbar'
 import {
     BrowserRouter as Router,
@@ -8,18 +8,33 @@ import {
 import Crud from '../components/Crud';
 import PokeGrid from '../components/PokeGrid';
 import PokeDetails from '../components/PokeDetails';
+import { useSelector } from 'react-redux';
+import PrivateRoute from './PrivateRoute';
+import MyPokemons from '../components/MyPokemons';
 
 export default function AppRouter() {
 
     const [busqueda, setBusqueda] = useState(null)
+    const [auth, setAuth] = useState(false)
+
+    const user = useSelector(store => store.login)
+
+    useEffect(() => {
+        if (user.uid) {
+            setAuth(true)
+        }
+    }, [user.uid])
 
     return (<>
 
         <Router>
-            <NavBar setBusqueda={setBusqueda} />
+            <NavBar setBusqueda={setBusqueda} auth={auth} user={user} />
             <Switch>
+
+                <PrivateRoute auth={auth} exact path="/mypokemons" component={MyPokemons} />
+
                 <Route exact path="/">
-                    <PokeGrid busqueda={busqueda}/>
+                    <PokeGrid busqueda={busqueda} />
                 </Route>
 
                 <Route exact path="/detalles/:nombre">
