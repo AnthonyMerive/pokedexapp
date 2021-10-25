@@ -1,70 +1,63 @@
-# Getting Started with Create React App
+# URL de despliegue
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+https://pokedexapp-react.netlify.app/
 
-## Available Scripts
+# Para desplegar de manera local:
 
-In the project directory, you can run:
+Clone el repositorio y ejecute los siguientes comandos:
+
+## si usa Yarn:
+
+### `yarn add`
+
+Ubique la carpeta del repositorio descargado, ejecute una consola y coloque el comando, eso instalara las dependencias necesarias para realizar el despliegue correctamente.
 
 ### `yarn start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+ejecute el comando, luego la pagina se desplegara en la direccion local: [http://localhost:3000](http://localhost:3000) 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## si usa NPM:
 
-### `yarn test`
+### `npm install`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Ubique la carpeta del repositorio descargado, ejecute una consola y coloque el comando, eso instalara las dependencias necesarias para realizar el despliegue correctamente.
 
-### `yarn build`
+### `npm start`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+ejecute el comando, luego la pagina se desplegara en la direccion local: [http://localhost:3000](http://localhost:3000) 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Dependencias usadas:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Si por algun motivo no se instalan las dependencias correctamente, use los siguientes comandos para instalarlas, las dependencias usadas son:
 
-### `yarn eject`
+- Instala Firebase
+### `npm i firebase` 
+### `yarn add firebase` 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Instala react-redux
+### `npm i react-redux` 
+### `yarn add react-redux` 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Instala react-router-dom
+### `npm i react-router-dom` 
+### `yarn add react-router-dom` 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- Instala redux-thunk
+### `npm i redux-thunk` 
+### `yarn add redux-thunk` 
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- Instala styled-components
+### `npm i styled-components` 
+### `yarn add styled-components` 
 
-## Learn More
+- Instala sweetalert2
+### `npm i sweetalert2` 
+### `yarn add sweetalert2` 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# Imagenes Previas
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<img src="https://res.cloudinary.com/df8qzqymf/image/upload/v1635137739/Captura1_lu9tpb.png" alt="vista previa1"/>
+<img src="https://res.cloudinary.com/df8qzqymf/image/upload/v1635137739/captura3_jg36nw.png" alt="vista previa2"/>
+<img src="https://res.cloudinary.com/df8qzqymf/image/upload/v1635137740/Captura2_rqxbsc.png" alt="vista previa3"/>
+<img src="https://res.cloudinary.com/df8qzqymf/image/upload/v1635137740/Captura4_uajbz7.png" alt="vista previa4"/>
