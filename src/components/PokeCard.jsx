@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components'
+import Swal from 'sweetalert2';
+import { agregarPokemon, borrarPokemon, editarPokemon, mostrarAsincronico } from '../actions/myPokemonsAction';
+import { useForm } from '../hooks/useForm';
 
 const StyledDiv = styled.div`
 
@@ -11,7 +15,6 @@ const StyledDiv = styled.div`
         border: solid 1px black;
         padding: 10px;
         background-color: #FF0A17;
-        cursor: pointer;
     }
 
     .cont{
@@ -68,6 +71,24 @@ const StyledDiv = styled.div`
         color: white;
     }
 
+    .agregar{
+        font-size: 10px;
+        background: green;
+        border-radius: 10px;
+        padding: 3px;
+    }
+
+   
+    .borrar{
+        font-size: 12px;
+        background: red;
+        border-radius: 30%;
+        padding: 7px;
+        border: solid 1px black;
+        
+    }
+
+ 
     @media (min-width: 600px) {
 
         .card{
@@ -80,11 +101,28 @@ const StyledDiv = styled.div`
             background-color: #C52C2F;
         }
 
-        .card:hover{
+        .card img:hover{
             transform: scale(1.02);
             opacity: 1;
             cursor: pointer;
         }
+
+        .agregar:hover{
+            opacity: 0.8;
+            cursor: pointer;
+        }
+    
+        .borrar:hover{
+            opacity: 0.6;
+            cursor: pointer;
+        }
+    
+        .editName:hover{
+            opacity: 0.6;
+            transform: scale(1.05);
+            cursor: pointer;
+        }
+    
 
       }
 
@@ -93,8 +131,18 @@ const StyledDiv = styled.div`
 export default function PokeCard(props) {
 
     const history = useHistory();
+    const dispatch = useDispatch();
+
     const URL = props.url;
     const [pokemon, setPokemon] = useState(null);
+    const [editNombre, setEditNombre] = useState(false)
+    const user = useSelector(store => store.login.correo)
+
+    const [values, handleInputChange] = useForm({
+        name: props.nombre
+    })
+
+    const { name } = values;
 
     useEffect(() => {
 
@@ -108,16 +156,83 @@ export default function PokeCard(props) {
         history.replace(`/detalles/${props.nombre}`)
     }
 
+    const handleAddPokemon = (e) => {
+        e.stopPropagation();
+        Swal.fire({
+            icon: 'info',
+            title: `Do you want to add ${props.nombre}? `,
+            showConfirmButton: true,
+            showCancelButton: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(agregarPokemon(
+                    props.nombre,
+                    pokemon.sprites.front_default,
+                    pokemon.types,
+                    props.user.correo
+                ))
+            }
+        })
+
+    }
+
+    const handleDelete = (e) => {
+        e.stopPropagation();
+        Swal.fire({
+            icon: 'info',
+            title: `Do you want to Delete ${props.nombre}? `,
+            showConfirmButton: true,
+            showCancelButton: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(borrarPokemon(props.id))
+                dispatch(mostrarAsincronico(user))
+            }
+        })
+
+    }
+
+    const handleEditName = (e) => {
+        e.stopPropagation();
+        setEditNombre(true);
+    }
+
+    const handleEdit = (e) => {
+        e.preventDefault();
+        if (props.nombre === name) {
+            setEditNombre(false)
+        } else {
+            Swal.fire({
+                icon: 'info',
+                title: `Do you want change the name ${props.nombre} to ${name}? `,
+                showConfirmButton: true,
+                showCancelButton: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    dispatch(editarPokemon(name, props.id))
+                    dispatch(mostrarAsincronico(user))
+                    setEditNombre(false)
+                }
+            })
+        }
+    }
+
     return (<StyledDiv>
 
-        <li onClick={handleDetalles} className="card">
+        <li className="card">
 
             <div className="cont">
                 {pokemon &&
-                    <img width={140} height={150} className="imagen" src={pokemon.sprites.front_default} alt={props.nombre} />
+                    <img onClick={handleDetalles} width={140} height={150} className="imagen" src={pokemon.sprites.front_default} alt={props.nombre} />
                 }
                 <div className="cont2">
-                    <h4 className="text-success">◉</h4>
+                    {props.auth ?
+                        <span onClick={handleAddPokemon} className="agregar fw-bold">ADD</span>
+                        : props.edit ?
+                            <span onClick={handleDelete} className="borrar fw-bold">X</span>
+                            :
+                            <h4 className="text-success">◉</h4>
+                    }
                     <h4 className="text-primary">⦿</h4>
                     <h4 className="text-dark">⊙</h4>
                 </div>
@@ -127,7 +242,33 @@ export default function PokeCard(props) {
                 {pokemon &&
                     <p className="fw-bold">#{pokemon.id}</p>
                 }
-                <h5 className="text-warning">{props.nombre.toUpperCase()}</h5>
+                {!props.edit ?
+                    <h5 className="text-warning">{props.nombre.toUpperCase()}</h5>
+                    : editNombre ?
+                        <form onSubmit={handleEdit} className="d-flex">
+                            <input
+                                type="text"
+                                id="inputName"
+                                className="form-control ms-1"
+                                required=""
+                                name="name"
+                                placeholder="Edit name"
+                                value={name}
+                                onChange={handleInputChange}
+                            />
+                            <button
+                                type="submit"
+                                className="btn btn-success btn-block ms-1"
+                            >
+                                ✔
+                            </button>
+                        </form>
+                        :
+                        props.pseudoName ?
+                            <h5 className="text-warning">{props.pseudoName.toUpperCase()}</h5>
+                            :
+                            <h5 onClick={handleEditName} className="text-warning editName">{props.nombre.toUpperCase()}</h5>
+                }
             </div>
             {pokemon &&
                 <div className="titulo2">

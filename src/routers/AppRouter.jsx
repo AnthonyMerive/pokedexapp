@@ -34,7 +34,7 @@ export default function AppRouter() {
                 <PrivateRoute auth={auth} exact path="/mypokemons" component={MyPokemons} />
 
                 <Route exact path="/">
-                    <PokeGrid busqueda={busqueda} />
+                    <PokeGrid busqueda={busqueda} auth={auth} user={user}/>
                 </Route>
 
                 <Route exact path="/detalles/:nombre">

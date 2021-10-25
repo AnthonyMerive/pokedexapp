@@ -93,7 +93,7 @@ export default function PokeGrid(props) {
             pokemonBuscado ?
                 <StyledContainer>
                     <ul className="imagenGrid">
-                        <PokeCard key={pokemonBuscado.id} url={`https://pokeapi.co/api/v2/pokemon/${busqueda}`} nombre={pokemonBuscado.name} />
+                        <PokeCard key={pokemonBuscado.id} url={`https://pokeapi.co/api/v2/pokemon/${busqueda}`} nombre={pokemonBuscado.name} auth={props.auth} user={props.user}/>
                     </ul>
                 </StyledContainer>
                 :
@@ -112,7 +112,7 @@ export default function PokeGrid(props) {
 
                         {pokemones.results ?
                             pokemones.results.map((data, index) =>
-                                <PokeCard key={index} url={data.url} nombre={data.name} />
+                                <PokeCard key={index} url={data.url} nombre={data.name} auth={props.auth} user={props.user}/>
                             )
                             :
                             <h3>Loading...</h3>

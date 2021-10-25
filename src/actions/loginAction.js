@@ -13,7 +13,7 @@ export const loginGoogle = () => {
         )
             .then(({ user }) => {
                 const data = user.providerData[0];
-                dispatch(loginSincrono(user.uid, data.displayName, data.photoURL, data.email))
+                dispatch(loginSincrono(user.uid, data.displayName, data.email))
             })
             .catch(error => {
                 Swal.fire({
